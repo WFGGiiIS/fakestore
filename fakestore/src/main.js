@@ -360,6 +360,7 @@ function renderCartProducts() {
     products.forEach((product) => {
       if (product !== null) {
         sum += product.price;
+        console.log(sum);
 
         cartContainer.innerHTML += `
       <div class="row">
