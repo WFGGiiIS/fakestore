@@ -1,0 +1,23 @@
+header {
+    padding: 20px;
+    background-color: #f8f9fa; /* Light gray background similar to the image */
+}
+
+.form-control {
+    border-radius: 20px; /* Rounded corners */
+    padding: 10px 20px; /* Comfortable padding */
+    border: 1px solid #ced4da; /* Light border */
+    box-shadow: none; /* Remove any default shadows */
+    max-width: 300px; /* Limit maximum width */
+}
+
+.form-control:focus {
+    border-color: #86b7fe; /* Blue border when focused */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Subtle focus shadow */
+    outline: 0; /* Remove default outline */
+}
+
+.cart-p-image{
+    display: flex;
+    flex-direction: row;
+}
