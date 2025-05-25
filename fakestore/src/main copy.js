@@ -340,15 +340,12 @@ function addToCart(productId, button) {
     button.classList.remove("btn-danger");
     button.textContent = "ADD";
   } else {
-    cart[productId] = {
-      ...product,
-      quantity: 1,
-    };
+    cart.append(product); 
     button.classList.add("btn-danger");
     button.textContent = "REMOVE";
   }
 
-  // console.log('Cart updated:', cart);
+  console.log('Cart updated:', cart);
 }
 
 function renderCartProducts() {
