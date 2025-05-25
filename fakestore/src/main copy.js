@@ -5,7 +5,7 @@ const cartContainer = document.querySelector("#cart-container");
 const searchInput = document.querySelector("#search-input");
 const productList = document.querySelector("#product-list");
 
-let cart = {};
+let cart = [];
 
 window.cart = cart;
 
@@ -360,7 +360,6 @@ function renderCartProducts() {
     products.forEach((product) => {
       if (product !== null) {
         sum += product.price;
-        console.log(sum);
 
         cartContainer.innerHTML += `
       <div class="row">
