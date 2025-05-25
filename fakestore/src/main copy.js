@@ -325,7 +325,7 @@ async function renderProducts() {
   document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     button.addEventListener("click", (event) => {
       const productId = Number(event.target.dataset.id);
-      // console.log(cart[productId]);
+      // console.log(productId);
       addToCart(productId, button);
     });
   });
@@ -335,12 +335,12 @@ function addToCart(productId, button) {
   const product = products.find((p) => p.id === productId);
   // console.log(product);
 
-  if (cart[productId]) {
-    cart[productId] = null;
+  if (cart.includes(product)) {
+    cart.pop(product);
     button.classList.remove("btn-danger");
     button.textContent = "ADD";
   } else {
-    cart.append(product); 
+    cart.push(product); 
     button.classList.add("btn-danger");
     button.textContent = "REMOVE";
   }
