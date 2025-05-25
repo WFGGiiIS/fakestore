@@ -340,12 +340,12 @@ function addToCart(productId, button) {
     button.classList.remove("btn-danger");
     button.textContent = "ADD";
   } else {
-    cart.push(product); 
+    cart.push(product);
     button.classList.add("btn-danger");
     button.textContent = "REMOVE";
   }
 
-  console.log('Cart updated:', cart);
+  console.log("Cart updated:", cart);
 }
 
 function renderCartProducts() {
@@ -376,10 +376,9 @@ function renderCartProducts() {
       }
     });
 
-    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} PLN</p>`
-  }
-  else{
-    cartContainer.innerHTML = '<h1>Nie Ma Produktów</h1>';
+    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} PLN</p>`;
+  } else {
+    cartContainer.innerHTML = "<h1>Nie Ma Produktów</h1>";
   }
 }
 
