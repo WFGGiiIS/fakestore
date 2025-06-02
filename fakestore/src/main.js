@@ -332,24 +332,43 @@ async function renderProducts() {
 }
 
 function addToCart(productId, button) {
+  const cardBody = document.querySelector("#card-body");
+
   const product = products.find((p) => p.id === productId);
   // console.log(product);
 
-  if (cart[productId]) {
-    cart[productId] = null;
-    button.classList.remove("btn-danger");
-    button.textContent = "ADD";
-  } else {
     cart[productId] = {
       ...product,
-      quantity: 1
+      quantity: 1,
     };
-    button.classList.add("btn-danger");
-    button.textContent = "REMOVE";
+    const quantityBtn = document.createElement("div");
+    quantityBtn.classList.add("w-50", "border", "border-2", "rounded");
+    quantityBtn.innerHTML = `<button class="btn btn-outline-danger" id="minus-btn">−</button>
+        <span class="number fs-4" style="text-align: center;" id="value">1</span>
+        <button class="btn btn-outline-success" id="plus-btn">+</button>`;
+    button.replaceWith(quantityBtn);
+
+    const minusBtn = document.querySelector("#minus-btn");
+    const quantityValue = document.querySelector("#value");
+    const plusBtn = document.querySelector("#plus-btn");
+
+    minusBtn.addEventListener("click", () => {
+      quantityValue.textContent = Number(quantityValue.textContent) - 1;
+      cart[productId].quantity = Number(quantityValue.textContent);
+      // console.log(cart[productId].id, cart[productId].quantity);
+
+      if(Number(quantityValue.textContent) === 0){
+        quantityBtn.replaceWith(button);
+      }
+    })
+    plusBtn.addEventListener("click", () => {
+      quantityValue.textContent = Number(quantityValue.textContent) + 1;
+      cart[productId].quantity = Number(quantityValue.textContent);
+      // console.log(cart[productId].id, cart[productId].quantity);
+    })
   }
 
   // console.log('Cart updated:', cart);
-}
 
 function renderCartProducts() {
   const products = Object.values(cart);
@@ -380,10 +399,9 @@ function renderCartProducts() {
       }
     });
 
-    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} PLN</p>`
-  }
-  else{
-    cartContainer.innerHTML = '<h1>Nie Ma Produktów</h1>';
+    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} PLN</p>`;
+  } else {
+    cartContainer.innerHTML = "<h1>Nie Ma Produktów</h1>";
   }
 }
 
