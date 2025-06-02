@@ -277,6 +277,9 @@ let products = [
     },
   },
 ];
+
+window.products = products;
+
 let searchValue = "";
 
 async function renderProducts() {
@@ -307,9 +310,9 @@ async function renderProducts() {
           />
           <div class="card-body">
             <h5 class="card-title">${product.title}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">zł${
+            <h6 class="card-subtitle mb-2 text-body-secondary">${
               product.price
-            }</h6>
+            }zł</h6>
             <p class="card-text">
                 ${product.description.slice(0, 100)}...
             </p>
@@ -332,15 +335,15 @@ async function renderProducts() {
 }
 
 function addToCart(productId, button) {
-  const product = products.find((p) => p.id === productId);
+  const product = cart.find((p) => p.id === productId);
   // console.log(product);
 
-  if (cart.includes(product)) {
-    cart.pop(product);
+  if (product !== undefined) {
+    cart = cart.filter((p) => p.id !== productId);
     button.classList.remove("btn-danger");
     button.textContent = "ADD";
   } else {
-    cart.push(product);
+    cart.push(products.find((p) => p.id === productId));
     button.classList.add("btn-danger");
     button.textContent = "REMOVE";
   }

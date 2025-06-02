@@ -341,7 +341,8 @@ function addToCart(productId, button) {
     button.textContent = "ADD";
   } else {
     cart[productId] = {
-      ...product
+      ...product,
+      quantity: 1
     };
     button.classList.add("btn-danger");
     button.textContent = "REMOVE";
