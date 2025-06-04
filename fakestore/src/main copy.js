@@ -345,7 +345,7 @@ function addToCart(productId, button) {
   }
 
   const quantityBtn = document.createElement("div");
-  quantityBtn.classList.add("w-50", "border", "border-2", "rounded");
+  quantityBtn.classList.add("w-50");
   quantityBtn.innerHTML = `
     <button class="btn btn-sm js-minus-btn">−</button>
     <input class="number fs-6 js-value" style="text-align: center; width: 40px;" value="${product.quantity}" readonly>
