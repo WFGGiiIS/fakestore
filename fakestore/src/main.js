@@ -343,14 +343,14 @@ function addToCart(productId, button) {
     };
     const quantityBtn = document.createElement("div");
     quantityBtn.classList.add("w-50", "border", "border-2", "rounded");
-    quantityBtn.innerHTML = `<button class="btn btn-outline-danger" id="minus-btn">−</button>
-        <span class="number fs-4" style="text-align: center;" id="value">1</span>
-        <button class="btn btn-outline-success" id="plus-btn">+</button>`;
+    quantityBtn.innerHTML = `<button class="btn js-minus-btn">−</button>
+        <input class="number fs-4 js-value" style="text-align: center;" value="1"></input>
+        <button class="btn js-plus-btn">+</button>`;
     button.replaceWith(quantityBtn);
 
-    const minusBtn = document.querySelector("#minus-btn");
-    const quantityValue = document.querySelector("#value");
-    const plusBtn = document.querySelector("#plus-btn");
+    const minusBtn = document.querySelector(".js-minus-btn");
+    const quantityValue = document.querySelector(".js-value");
+    const plusBtn = document.querySelector(".js-plus-btn");
 
     minusBtn.addEventListener("click", () => {
       quantityValue.textContent = Number(quantityValue.textContent) - 1;
@@ -377,8 +377,8 @@ function renderCartProducts() {
     let sum = 0;
 
     products.forEach((product) => {
-      if (product !== null) {
-        sum += product.price;
+      if (product.quantity !== 0) {
+        sum += product.price * product.quantity;
         console.log(sum);
 
         cartContainer.innerHTML += `
@@ -390,18 +390,20 @@ function renderCartProducts() {
           ${product.title}
         </div>
         <div class="col text-end">
-          ${product.price} PLN
+          Quantity: ${product.quantity}
+        </div>
+        <div class="col text-end">
+          ${product.price * product.quantity} zł
         </div>
       </div>
     `;
-
-        console.log(cart);
       }
     });
-
-    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} PLN</p>`;
+      cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} zł</p>`;
+      console.log("if");
   } else {
     cartContainer.innerHTML = "<h1>Nie Ma Produktów</h1>";
+    console.log("else");
   }
 }
 

@@ -335,20 +335,42 @@ async function renderProducts() {
 }
 
 function addToCart(productId, button) {
-  const product = cart.find((p) => p.id === productId);
-  // console.log(product);
+  let product = cart.find((p) => p.id === productId);
 
-  if (product !== undefined) {
-    cart = cart.filter((p) => p.id !== productId);
-    button.classList.remove("btn-danger");
-    button.textContent = "ADD";
+  if (product) {
+    product.quantity += 1;
   } else {
-    cart.push(products.find((p) => p.id === productId));
-    button.classList.add("btn-danger");
-    button.textContent = "REMOVE";
+    product = { ...products.find((p) => p.id === productId), quantity: 1 };
+    cart.push(product);
   }
 
-  console.log("Cart updated:", cart);
+  const quantityBtn = document.createElement("div");
+  quantityBtn.classList.add("w-50", "border", "border-2", "rounded");
+  quantityBtn.innerHTML = `
+    <button class="btn btn-sm js-minus-btn">−</button>
+    <input class="number fs-6 js-value" style="text-align: center; width: 40px;" value="${product.quantity}" readonly>
+    <button class="btn btn-sm js-plus-btn">+</button>
+  `;
+  button.replaceWith(quantityBtn);
+
+  const minusBtn = quantityBtn.querySelector(".js-minus-btn");
+  const quantityValue = quantityBtn.querySelector(".js-value");
+  const plusBtn = quantityBtn.querySelector(".js-plus-btn");
+
+  minusBtn.addEventListener("click", () => {
+    if (product.quantity > 1) {
+      product.quantity -= 1;
+      quantityValue.value = product.quantity;
+    } else {
+      cart = cart.filter((p) => p.id !== productId);
+      quantityBtn.replaceWith(button);
+    }
+  });
+
+  plusBtn.addEventListener("click", () => {
+    product.quantity += 1;
+    quantityValue.value = product.quantity;
+  });
 }
 
 function renderCartProducts() {
@@ -359,7 +381,7 @@ function renderCartProducts() {
 
     products.forEach((product) => {
       if (product !== null) {
-        sum += product.price;
+        sum += product.price * product.quantity;
 
         cartContainer.innerHTML += `
       <div class="row">
@@ -369,8 +391,11 @@ function renderCartProducts() {
         <div class="col">
           ${product.title}
         </div>
+        <div class="col">
+          Quantity: ${product.quantity}
+        </div>
         <div class="col text-end">
-          ${product.price} PLN
+          ${product.price * product.quantity} zł
         </div>
       </div>
     `;
@@ -379,7 +404,7 @@ function renderCartProducts() {
       }
     });
 
-    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum} PLN</p>`;
+    cartContainer.innerHTML += `<p style="text-align: right; font-weight: bold;">Total: ${sum.toFixed(2)} zł</p>`;
   } else {
     cartContainer.innerHTML = "<h1>Nie Ma Produktów</h1>";
   }
