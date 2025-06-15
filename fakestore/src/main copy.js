@@ -301,7 +301,7 @@ async function renderProducts() {
     productList.innerHTML += `
       <div class="col-4">
         <div class="card">
-          <h4>Product #${index + 1}</h4>
+          <h4 class="text-center">Product #${index + 1}</h4>
           <img
             src="${product.image}"
             class="card-img-top img-thumbnail object-fit-contain"
@@ -348,7 +348,7 @@ function addToCart(productId, button) {
   quantityBtn.classList.add("w-50");
   quantityBtn.innerHTML = `
     <button class="btn btn-sm js-minus-btn">−</button>
-    <input class="number fs-6 js-value" style="text-align: center; width: 40px;" value="${product.quantity}" readonly>
+    <input class="number fs-6 js-value" style="text-align: center; width: 40px;" value="${product.quantity}" type="number">
     <button class="btn btn-sm js-plus-btn">+</button>
   `;
   button.replaceWith(quantityBtn);
@@ -366,6 +366,10 @@ function addToCart(productId, button) {
       quantityBtn.replaceWith(button);
     }
   });
+
+  quantityValue.addEventListener("input", () => {
+    product.quantity = quantityValue.value;
+  })
 
   plusBtn.addEventListener("click", () => {
     product.quantity += 1;
